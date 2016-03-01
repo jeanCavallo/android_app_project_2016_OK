@@ -95,6 +95,9 @@ public class FilmSeances {
     public String getInfo() {
         return info;
     }
+    public String getIs_vente() {
+        return is_vente;
+    }
     public int getGenreid() {
         return genreid;
     }
@@ -156,6 +159,9 @@ public class FilmSeances {
     }
     public void setInfo(String info) {
         this.info = info;
+    }
+    public void setIs_vente(String is_vente) {
+        this.is_vente = is_vente;
     }
     public void setGenreid(int genreid) {
         this.genreid = genreid;
