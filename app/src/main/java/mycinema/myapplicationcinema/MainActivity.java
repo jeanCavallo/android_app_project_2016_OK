@@ -2,6 +2,7 @@ package mycinema.myapplicationcinema;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,6 +13,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -36,7 +41,8 @@ public class MainActivity extends AppCompatActivity  {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showJSON(response);
+                        parseJSON(response); // TODO do the same as parseJSONFilmSeances
+                        Log.d("testImportation", response);
                         Toast.makeText(MainActivity.this, "JSON EVENTS imported !!", Toast.LENGTH_LONG).show();
                     }
                 },
@@ -51,7 +57,8 @@ public class MainActivity extends AppCompatActivity  {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showJSON(response);
+                        parseJSONFilmSeances(response);
+
                         Toast.makeText(MainActivity.this, "JSON FILMS SEANCES imported !!", Toast.LENGTH_LONG).show();
                     }
                 },
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity  {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showJSON(response);
+                        parseJSON(response); // TODO do the same as parseJSONFilmSeances
                         Toast.makeText(MainActivity.this, "JSON PROCHAINEMENT imported !!", Toast.LENGTH_LONG).show();
                     }
                 },
@@ -81,7 +88,7 @@ public class MainActivity extends AppCompatActivity  {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        showJSON(response);
+                        parseJSON(response); // TODO do the same as parseJSONFilmSeances
                         Toast.makeText(MainActivity.this, "JSON SEANCES imported !!", Toast.LENGTH_LONG).show();
                     }
                 },
@@ -99,9 +106,20 @@ public class MainActivity extends AppCompatActivity  {
         requestQueue.add(stringRequestSeances);
     }
 
-    private void showJSON(String json){
-        ParseJSON parseJSON = new ParseJSON(json);
-        parseJSON.parseJSON();
+    protected void parseJSONFilmSeances(String json){
+        JSONArray jsonArray = null;
+        JSONObject jsonObject = null;
+        try {
+            jsonArray = new JSONArray(json);
+            DBManagerFilmSeances dbManagerFilmSeances = new DBManagerFilmSeances(getApplicationContext());
+            for (int subscript=0; subscript<jsonArray.length(); subscript++){
+                jsonObject = jsonArray.getJSONObject(subscript);
+                FilmSeances filmSeancesToAdd = new FilmSeances(jsonObject.getInt("id"),/* Faire ça pour tous..*/); //TODO add attributs
+                dbManagerFilmSeances.addFilmSeances(filmSeancesToAdd);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

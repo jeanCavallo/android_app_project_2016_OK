@@ -26,11 +26,15 @@ public class FilmSeances {
     private String share_url;
     private String medias;
 
+
+
+    private String videos;
+
     public FilmSeances()
     {
     }
     public FilmSeances(int id,String titre,String titre_ori,String affiche,String web,int duree,String distributeur,String participants,String realisateur,String synopsis,int annee,
-                       String date_sortie,String info,String is_vente,int genreid,String genre,String categorie,int ReleaseNumber,String pays,String share_url,String medias)
+                       String date_sortie,String info,String is_vente,int genreid,String genre,String categorie,int ReleaseNumber,String pays,String share_url,String medias, String videos)
     {
         this.id=id;
         this.titre=titre;
@@ -53,6 +57,7 @@ public class FilmSeances {
         this.pays=pays;
         this.share_url=share_url;
         this.medias=medias;
+        this.videos=videos;
     }
 
     // ACCESSEUR
@@ -119,6 +124,9 @@ public class FilmSeances {
     public String getMedias() {
         return medias;
     }
+    public String getVideos() {
+        return videos;
+    }
 
     // MUTATEUR
     public void setId(int id) {
@@ -183,5 +191,8 @@ public class FilmSeances {
     }
     public void setMedias(String medias) {
         this.medias = medias;
+    }
+    public void setVideos(String videos) {
+        this.videos = videos;
     }
 }
