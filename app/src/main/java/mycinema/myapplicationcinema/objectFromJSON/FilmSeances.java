@@ -1,40 +1,43 @@
-package mycinema.myapplicationcinema;
+package mycinema.myapplicationcinema.objectFromJSON;
 
 /**
  * Created by jean on 01/03/16.
  */
 public class FilmSeances {
-    private int id;
+    private Integer id;
     private String titre;
     private String titre_ori;
     private String affiche;
     private String web;
-    private int duree;
+    private String duree;
     private String distributeur;
     private String participants;
     private String realisateur;
     private String synopsis;
-    private int annee;
+    private String annee;
     private String date_sortie;
     private String info;
-    private String is_vente;
-    private int genreid;
+    private boolean is_visible;
+    private boolean is_vente;
+    private Integer genreid;
+    private Integer categorieid;
     private String genre;
     private String categorie;
-    private int ReleaseNumber;
+    private Integer ReleaseNumber;
     private String pays;
     private String share_url;
     private String medias;
-
-
-
     private String videos;
+    private Boolean is_avp;
+    private Boolean is_alaune;
+    private Boolean is_lastWeek;
 
     public FilmSeances()
     {
     }
-    public FilmSeances(int id,String titre,String titre_ori,String affiche,String web,int duree,String distributeur,String participants,String realisateur,String synopsis,int annee,
-                       String date_sortie,String info,String is_vente,int genreid,String genre,String categorie,int ReleaseNumber,String pays,String share_url,String medias, String videos)
+    public FilmSeances(Integer id,String titre,String titre_ori,String affiche,String web,String duree,String distributeur,String participants,String realisateur,String synopsis,String annee,
+                       String date_sortie,String info,boolean is_visible, boolean is_vente,Integer genreid,Integer categorieid, String genre,String categorie,Integer ReleaseNumber,String pays,String share_url,
+                       String medias, String videos, boolean is_avp, boolean is_alaune, boolean is_lastWeek)
     {
         this.id=id;
         this.titre=titre;
@@ -49,8 +52,10 @@ public class FilmSeances {
         this.annee=annee;
         this.date_sortie=date_sortie;
         this.info=info;
+        this.is_visible=is_visible;
         this.is_vente=is_vente;
         this.genreid=genreid;
+        this.categorieid=categorieid;
         this.genre=genre;
         this.categorie=categorie;
         this.ReleaseNumber=ReleaseNumber;
@@ -58,10 +63,13 @@ public class FilmSeances {
         this.share_url=share_url;
         this.medias=medias;
         this.videos=videos;
+        this.is_avp=is_avp;
+        this.is_alaune=is_alaune;
+        this.is_lastWeek=is_lastWeek;
     }
 
     // ACCESSEUR
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     public String getTitre() {
@@ -76,7 +84,7 @@ public class FilmSeances {
     public String getWeb() {
         return web;
     }
-    public int getDuree() {
+    public String getDuree() {
         return duree;
     }
     public String getDistributeur() {
@@ -91,7 +99,7 @@ public class FilmSeances {
     public String getSynopsis() {
         return synopsis;
     }
-    public int getAnnee() {
+    public String getAnnee() {
         return annee;
     }
     public String getDate_sortie() {
@@ -100,11 +108,17 @@ public class FilmSeances {
     public String getInfo() {
         return info;
     }
-    public String getIs_vente() {
+    public boolean is_visible() {
+        return is_visible;
+    }
+    public boolean getIs_vente() {
         return is_vente;
     }
-    public int getGenreid() {
+    public Integer getGenreid() {
         return genreid;
+    }
+    public Integer getCategorieid() {
+        return categorieid;
     }
     public String getGenre() {
         return genre;
@@ -112,7 +126,7 @@ public class FilmSeances {
     public String getCategorie() {
         return categorie;
     }
-    public int getReleaseNumber() {
+    public Integer getReleaseNumber() {
         return ReleaseNumber;
     }
     public String getPays() {
@@ -127,9 +141,18 @@ public class FilmSeances {
     public String getVideos() {
         return videos;
     }
+    public Boolean getIs_avp() {
+        return is_avp;
+    }
+    public Boolean getIs_alaune() {
+        return is_alaune;
+    }
+    public Boolean getIs_lastWeek() {
+        return is_lastWeek;
+    }
 
     // MUTATEUR
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     public void setTitre(String titre) {
@@ -144,7 +167,7 @@ public class FilmSeances {
     public void setWeb(String web) {
         this.web = web;
     }
-    public void setDuree(int duree) {
+    public void setDuree(String duree) {
         this.duree = duree;
     }
     public void setDistributeur(String distributeur) {
@@ -159,7 +182,7 @@ public class FilmSeances {
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
-    public void setAnnee(int annee) {
+    public void setAnnee(String annee) {
         this.annee = annee;
     }
     public void setDate_sortie(String date_sortie) {
@@ -168,11 +191,17 @@ public class FilmSeances {
     public void setInfo(String info) {
         this.info = info;
     }
-    public void setIs_vente(String is_vente) {
+    public void setIs_visible(boolean is_visible) {
+        this.is_visible = is_visible;
+    }
+    public void setIs_vente(boolean is_vente) {
         this.is_vente = is_vente;
     }
-    public void setGenreid(int genreid) {
+    public void setGenreid(Integer genreid) {
         this.genreid = genreid;
+    }
+    public void setCategorieid(Integer categorieid) {
+        this.categorieid = categorieid;
     }
     public void setGenre(String genre) {
         this.genre = genre;
@@ -180,7 +209,7 @@ public class FilmSeances {
     public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
-    public void setReleaseNumber(int ReleaseNumber) {
+    public void setReleaseNumber(Integer ReleaseNumber) {
         this.ReleaseNumber = ReleaseNumber;
     }
     public void setPays(String pays) {
@@ -195,4 +224,14 @@ public class FilmSeances {
     public void setVideos(String videos) {
         this.videos = videos;
     }
+    public void setIs_avp(Boolean is_avp) {
+        this.is_avp = is_avp;
+    }
+    public void setIs_alaune(Boolean is_alaune) {
+        this.is_alaune = is_alaune;
+    }
+    public void setIs_lastWeek(Boolean is_lastWeek) {
+        this.is_lastWeek = is_lastWeek;
+    }
+
 }
