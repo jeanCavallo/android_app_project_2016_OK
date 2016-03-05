@@ -21,7 +21,7 @@ public class Main2Activity extends AppCompatActivity {
         //FilmSeances filmTest = new FilmSeances();
         //filmTest = null;
         if(filmTest != null){
-            Toast.makeText(Main2Activity.this, filmTest.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(Main2Activity.this, filmTest.getTitre(), Toast.LENGTH_LONG).show(); //TODO check why is it not working on !
         }else{
             Toast.makeText(Main2Activity.this, "Ce film n'existe pas !", Toast.LENGTH_LONG).show();
         }
