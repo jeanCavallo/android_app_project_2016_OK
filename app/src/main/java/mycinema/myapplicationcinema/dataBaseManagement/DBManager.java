@@ -12,6 +12,7 @@ import java.util.List;
 
 import mycinema.myapplicationcinema.objectFromJSON.FilmSeances;
 import mycinema.myapplicationcinema.objectFromJSON.Seances;
+import mycinema.myapplicationcinema.objectFromJSON.Soon;
 
 /**
  * Created by jean on 01/03/16.
@@ -24,6 +25,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String TABLE_FILMSEANCES = "filmseances";
     private static final String TABLE_EVENTS = "events";
     private static final String TABLE_SEANCES = "seances";
+    private static final String TABLE_SOON = "soon";
 
     // FOR TABLE_FILMSEANCES
     private static final String FILM_ID = "id";
@@ -87,9 +89,16 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String SEANCE_PERFORMANCEID = "performanceid";
     private static final String SEANCE_CINEMA_SALLE = "cinema_salle";
 
+    // TABLE FOR SOON
+    private static final String SOON_ID = "id";
+    private static final String SOON_TITRE = "titre";
+    private static final String SOON_AFFICHE = "affiche";
+
     public DBManager(Context context) {
+
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
+
     @Override
     public void onCreate(SQLiteDatabase dataBase) {
         String CREATE_FILMSEANCES_TABLE = "CREATE TABLE "
@@ -161,15 +170,25 @@ public class DBManager extends SQLiteOpenHelper {
                 + SEANCE_CINEMA_SALLE + " TEXT "
                 + ")";
 
+        String CREATE_SOON_TABLE = "CREATE TABLE "
+                + TABLE_SOON
+                + "("
+                + SOON_ID + " INTEGER PRIMARY KEY, "
+                + SOON_TITRE + " TEXT, "
+                + SOON_AFFICHE + " TEXT "
+                + ")";
+
         dataBase.execSQL(CREATE_FILMSEANCES_TABLE);
         dataBase.execSQL(CREATE_EVENTS_TABLE);
         dataBase.execSQL(CREATE_SEANCES_TABLE);
+        dataBase.execSQL(CREATE_SOON_TABLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase dataBase, int oldVersion, int newVersion) {
         dataBase.execSQL("DROP TABLE IF EXISTS " + TABLE_FILMSEANCES);
         dataBase.execSQL("DROP TABLE IF EXISTS " + TABLE_SEANCES);
         dataBase.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
+        dataBase.execSQL("DROP TABLE IF EXISTS " + TABLE_SOON);
         onCreate(dataBase);
     }
 
@@ -225,6 +244,52 @@ public class DBManager extends SQLiteOpenHelper {
         values.put(SEANCE_CINEMA_SALLE, seance.getCinema_salle());
         dataBase.insert(TABLE_SEANCES, null, values);
         dataBase.close();
+    }
+
+    public void addSoon(Soon soon) {
+        SQLiteDatabase dataBase = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SOON_ID, soon.getId());
+        values.put(SOON_TITRE, soon.getTitre());
+        values.put(SOON_AFFICHE, soon.getAffiche());
+        dataBase.insert(TABLE_SOON, null, values);
+        dataBase.close();
+    }
+
+    public List<Soon> getAllSoon() {
+        List<Soon> filmList = new ArrayList<Soon>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_SOON;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Soon filmSelected = new Soon();
+                filmSelected.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SOON_ID))));
+                filmSelected.setTitre(cursor.getString(cursor.getColumnIndex(SOON_TITRE)));
+                filmSelected.setAffiche(cursor.getString(cursor.getColumnIndex(SOON_AFFICHE)));
+
+                filmList.add(filmSelected);
+            } while (cursor.moveToNext());
+        }
+        return filmList;
+    }
+
+    public Soon getSoon(Integer idFilm) {
+        Soon filmSelected = new Soon();
+        String selectQuery = "SELECT * FROM " + TABLE_SOON + " WHERE id = " + idFilm + "";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+
+        filmSelected.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SOON_ID))));
+        filmSelected.setTitre(cursor.getString(cursor.getColumnIndex(SOON_TITRE)));
+        filmSelected.setAffiche(cursor.getString(cursor.getColumnIndex(SOON_AFFICHE)));
+
+        return filmSelected;
     }
 
     public List<FilmSeances> getAllFilms() {

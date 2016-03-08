@@ -4,33 +4,33 @@ package mycinema.myapplicationcinema.objectFromJSON;
  * Created by jean on 01/03/16.
  */
 public class FilmSeances {
-    private Integer id;
-    private String titre;
-    private String titre_ori;
-    private String affiche;
-    private String web;
-    private String duree;
-    private String distributeur;
-    private String participants;
-    private String realisateur;
-    private String synopsis;
-    private String annee;
-    private String date_sortie;
-    private String info;
-    private boolean is_visible;
-    private boolean is_vente;
-    private Integer genreid;
-    private Integer categorieid;
-    private String genre;
-    private String categorie;
-    private Integer ReleaseNumber;
-    private String pays;
-    private String share_url;
-    private String medias;
-    private String videos;
-    private Boolean is_avp;
-    private Boolean is_alaune;
-    private Boolean is_lastWeek;
+    private Integer id = 0;
+    private String titre = null;
+    private String titre_ori = null;
+    private String affiche = null;
+    private String web = null;
+    private String duree = null;
+    private String distributeur = null;
+    private String participants = null;
+    private String realisateur = null;
+    private String synopsis = null;
+    private String annee = null;
+    private String date_sortie = null;
+    private String info = null;
+    private boolean is_visible = false;
+    private boolean is_vente = false;
+    private Integer genreid = 0;
+    private Integer categorieid = 0;
+    private String genre = null;
+    private String categorie = null;
+    private Integer ReleaseNumber = 0;
+    private String pays = null;
+    private String share_url = null;
+    private String medias = null;
+    private String videos = null;
+    private Boolean is_avp = false;
+    private Boolean is_alaune = false;
+    private Boolean is_lastWeek = false;
 
     public FilmSeances()
     {
@@ -108,7 +108,7 @@ public class FilmSeances {
     public String getInfo() {
         return info;
     }
-    public boolean is_visible() {
+    public boolean getIs_visible() {
         return is_visible;
     }
     public boolean getIs_vente() {
