@@ -24,6 +24,18 @@
             android:name=".activities.WelcomeActivity"
             android:label="Séances"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.EventsActivity"
+            android:label="@string/title_activity_events"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.SoonActivity"
+            android:label="@string/title_activity_soon"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.PreferencesActivity"
+            android:label="@string/title_activity_preferences"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

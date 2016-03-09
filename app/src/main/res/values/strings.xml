@@ -97,4 +97,6 @@
     </string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_soon">SoonActivity</string>
+    <string name="title_activity_events">EventsActivity</string>
+    <string name="title_activity_preferences">PreferencesActivity</string>
 </resources>
