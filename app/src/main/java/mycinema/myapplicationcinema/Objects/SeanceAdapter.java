@@ -1,6 +1,8 @@
 package mycinema.myapplicationcinema.Objects;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 import mycinema.myapplicationcinema.R;
@@ -19,7 +23,6 @@ import mycinema.myapplicationcinema.objectFromJSON.Seances;
  */
 public class SeanceAdapter extends ArrayAdapter<Seances> {
 
-        //seances est la liste des models à afficher
         public SeanceAdapter(Context context, List<Seances> seances) {
             super(context, 0, seances);
         }
@@ -40,13 +43,21 @@ public class SeanceAdapter extends ArrayAdapter<Seances> {
                 convertView.setTag(viewHolder);
             }
 
-            //getItem(position) va récupérer l'item [position] de la List<Seance> seances
             Seances seance = getItem(position);
+            // TODO : Find how to get the url corresponding to the film
+            // To load the picture
+            /*URL url = new URL(seance.getA);
+            Bitmap bmp = null;
+            try {
+                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
 
-            //il ne reste plus qu'à remplir notre vue
+            // Pour remplir la vue
             viewHolder.titre.setText(seance.getTitre());
             viewHolder.cinema_salle.setText(seance.getCinema_salle());
-            viewHolder.avatar.setImageDrawable(new ColorDrawable());
+            viewHolder.avatar.setImageDrawable(new ColorDrawable(20));
 
             return convertView;
         }
