@@ -1,14 +1,13 @@
 package mycinema.myapplicationcinema.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -21,8 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import mycinema.myapplicationcinema.R;
 import mycinema.myapplicationcinema.dataBaseManagement.DBManager;
 import mycinema.myapplicationcinema.objectFromJSON.FilmSeances;
@@ -30,30 +27,55 @@ import mycinema.myapplicationcinema.objectFromJSON.Prochainement;
 import mycinema.myapplicationcinema.objectFromJSON.Seances;
 import mycinema.myapplicationcinema.objectFromJSON.Soon;
 
-public class MainActivity extends AppCompatActivity  {
+public class StartingActivity extends AppCompatActivity {
 
     public static final String JSON_URL_EVENTS = "http://centrale.corellis.eu/events.json";
     public static final String JSON_URL_FILMSEANCES = "http://centrale.corellis.eu/filmseances.json";
     public static final String JSON_URL_PROCHAINEMENTS = "http://centrale.corellis.eu/prochainement.json";
     public static final String JSON_URL_SEANCES = "http://centrale.corellis.eu/seances.json";
 
-    private ListView listView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_starting);
+
+        final ProgressBar mProgress = (ProgressBar) findViewById(R.id.progressBarLoading);
+
+        /*ProgressDialog pDialog;
+
+        pDialog = new ProgressDialog(StartingActivity.this);
+        pDialog.setMessage("Processing Request...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();*/
 
         if(!isOnline()){
-            // Go directly to the next activity
+            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+            startActivity(intent);
         }else{
             this.deleteDatabase("FilmSeancesDB.db");
-            sendRequest();
-
+        Thread timerThread = new Thread(){
+            public void run(){
+                try{
+                    sendRequest(mProgress);
+                } finally {
+                }
+            }
+        };
+        timerThread.start();
         }
     }
 
-    private void sendRequest(){
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+    
+    // TO SEND ALL THE REQUESTS
+    private void sendRequest(final ProgressBar mProgress){
+
+        final Integer[] count = {0};
 
         /*StringRequest stringRequestEvents = new StringRequest(JSON_URL_EVENTS,
                 new Response.Listener<String>() {
@@ -61,13 +83,13 @@ public class MainActivity extends AppCompatActivity  {
                     public void onResponse(String response) {
                         //parseJSON(response); // TODO do the same as parseJSONFilmSeances
                         Log.d("testImportation", response);
-                        Toast.makeText(MainActivity.this, "JSON EVENTS imported !!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, "JSON EVENTS imported !!", Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });*/
 
@@ -76,13 +98,19 @@ public class MainActivity extends AppCompatActivity  {
                     @Override
                     public void onResponse(String response) {
                         parseJSONFilmSeances(response);
-                        Toast.makeText(MainActivity.this, "JSON FILMS SEANCES imported !!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, "JSON FILMS SEANCES imported !!", Toast.LENGTH_LONG).show();
+                        count[0] = count[0] +1;
+                        mProgress.setProgress(count[0]/3);
+                        if(count[0]==3){
+                            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -91,13 +119,19 @@ public class MainActivity extends AppCompatActivity  {
                     @Override
                     public void onResponse(String response) {
                         parseJSONProchainement(response);
-                        Toast.makeText(MainActivity.this, "JSON PROCHAINEMENT imported !!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, "JSON PROCHAINEMENT imported !!", Toast.LENGTH_LONG).show();
+                        count[0] = count[0] +1;
+                        mProgress.setProgress(count[0]/3);
+                        if(count[0]==3){
+                            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -106,13 +140,19 @@ public class MainActivity extends AppCompatActivity  {
                     @Override
                     public void onResponse(String response) {
                         parseJSONSeances(response);
-                        Toast.makeText(MainActivity.this, "JSON SEANCES imported !!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, "JSON SEANCES imported !!", Toast.LENGTH_LONG).show();
+                        count[0] = count[0] +1;
+                        mProgress.setProgress(count[0]/3);
+                        if(count[0]==3){
+                            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+                            startActivity(intent);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartingActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -122,7 +162,10 @@ public class MainActivity extends AppCompatActivity  {
         requestQueue.add(stringRequestProchainements);
         requestQueue.add(stringRequestSeances);
     }
+    
+    
 
+    // METHODS TO PARSE JSONS FROM DOWNLOADS
     protected void parseJSONFilmSeances(String json){
         JSONArray jsonArray = null;
         JSONObject jsonObject = null;
@@ -143,7 +186,7 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    protected void parseJSONSeances(String json){ // TODO: Finish about the type
+    protected void parseJSONSeances(String json){
         JSONArray jsonArray = null;
         JSONObject jsonObject = null;
         try {
@@ -160,30 +203,6 @@ public class MainActivity extends AppCompatActivity  {
             e.printStackTrace();
         }
     }
-
-    /*protected void parseJSONProchainement(String json){
-        JSONArray jsonArray = null;
-        JSONObject jsonObject = null;
-        JSONObject jsonObject2 = null;
-        try {
-            jsonArray = new JSONArray(json);
-            DBManager dbManagerSeances = new DBManager(getApplicationContext());
-            for (Integer subscript2=0; subscript2<jsonArray.length(); subscript2++){
-                jsonObject = jsonArray.getJSONObject(subscript2);
-                Prochainement prochainementUpdated = new Prochainement(jsonObject.getString("current"), jsonObject.getString("next"), jsonObject.getJSONArray("film"));
-
-                JSONArray jsonArrayProchainementFilms = prochainementUpdated.getFilms();
-
-                for (Integer subscript=0; subscript<jsonArrayProchainementFilms.length(); subscript++){
-                    jsonObject2 = jsonArrayProchainementFilms.getJSONObject(subscript);
-                    Soon soonToAdd = new Soon(jsonObject2.getInt("id"),jsonObject2.getString("titre"),jsonObject2.getString("affiche"));
-                    dbManagerSeances.addSoon(soonToAdd);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     protected void parseJSONProchainement(String json){
         JSONObject jsonObject = null;
@@ -225,16 +244,14 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-    public void nextActivity(View view)
-    {
-        Intent intent1 = new Intent(this, WelcomeActivity.class);
-        startActivity(intent1);
-    }
-
+    // METHOD TO TEST IF THERE IS A CONNECTION TO INTERNET AVAILABLE
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+
+
 
 }

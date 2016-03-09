@@ -1,5 +1,6 @@
 package mycinema.myapplicationcinema.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -37,15 +38,6 @@ public class WelcomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,31 +47,17 @@ public class WelcomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        DBManager filmSeancesDB = new DBManager(this);
-        filmSeancesDB.getReadableDatabase();
-        Log.d("Reading: ", "Reading all films..");
-        FilmSeances film = filmSeancesDB.getFilm(8587);
-
-        String log = "Id: " + film.getId() + " ,Titre: " + film.getTitre() + " ,duree: " + film.getDuree() + " ,categorieid: " + film.getCategorieid();
-        Log.d("Film: : ", log);
-
         mListView = (ListView) findViewById(R.id.listView);
 
-        /*DBManager seancesDB = new DBManager(this);
+        DBManager seancesDB = new DBManager(this);
         seancesDB.getReadableDatabase();
 
         List<Seances> allSeances = seancesDB.getAllSeances();
 
         SeanceAdapter adapter = new SeanceAdapter(WelcomeActivity.this, allSeances);
-        mListView.setAdapter(adapter);*/
+        mListView.setAdapter(adapter);
 
-        Seances seanceTest = filmSeancesDB.getSeance(189576);
-        String log2 = "Id: " + seanceTest.getId() + " ,Titre: " + seanceTest.getTitre() + " ,Cinema: " + seanceTest.getCinema_salle() + " ,categorieid: " + seanceTest.getCategorieid();
-        Log.d("Seances: : ", log2);
 
-        Soon filmSoon = filmSeancesDB.getSoon(10839);
-        String log4 = "Id: " + filmSoon.getId() + " ,Titre: " + filmSoon.getTitre() + " ,Cinema: " + filmSoon.getAffiche();
-        Log.d("Seances: : ", log4);
 
     }
 
@@ -108,9 +86,6 @@ public class WelcomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -121,18 +96,18 @@ public class WelcomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.menu_alaffiche) {
+            Intent intent = new Intent(WelcomeActivity.this,WelcomeActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_evenements) {
+            Intent intent = new Intent(WelcomeActivity.this,EventsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_prochainement) {
+            Intent intent = new Intent(WelcomeActivity.this,SoonActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.settings_preferences) {
+            Intent intent = new Intent(WelcomeActivity.this,PreferencesActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
