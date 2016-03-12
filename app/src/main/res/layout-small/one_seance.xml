@@ -7,7 +7,7 @@
     >
 
     <ImageView
-        android:id="@+id/avatar"
+        android:id="@+id/affiche"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:background="@mipmap/ic_launcher"
@@ -19,20 +19,20 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/avatar"
-        android:layout_alignTop="@+id/avatar"
+        android:layout_toRightOf="@+id/affiche"
+        android:layout_alignTop="@+id/affiche"
         android:textStyle="bold"
         tools:text="Titre"
         />
 
     <TextView
-        android:id="@+id/cinema_salle"
+        android:id="@+id/duree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:layout_alignLeft="@+id/titre"
         android:layout_below="@+id/titre"
-        tools:text="Salle de cinéma"
+        tools:text="Duree"
         />
 
 </RelativeLayout>

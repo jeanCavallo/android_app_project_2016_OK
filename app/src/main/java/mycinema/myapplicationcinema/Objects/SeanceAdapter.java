@@ -38,33 +38,25 @@ public class SeanceAdapter extends ArrayAdapter<Seances> {
             if(viewHolder == null){
                 viewHolder = new SeanceViewHolder();
                 viewHolder.titre = (TextView) convertView.findViewById(R.id.titre);
-                viewHolder.cinema_salle = (TextView) convertView.findViewById(R.id.cinema_salle);
-                viewHolder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
+                //viewHolder.cinema_salle = (TextView) convertView.findViewById(R.id.cinema_salle);
+                viewHolder.affiche = (ImageView) convertView.findViewById(R.id.affiche);
                 convertView.setTag(viewHolder);
             }
 
             Seances seance = getItem(position);
             // TODO : Find how to get the url corresponding to the film
-            // To load the picture
-            /*URL url = new URL(seance.getA);
-            Bitmap bmp = null;
-            try {
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
 
             // Pour remplir la vue
             viewHolder.titre.setText(seance.getTitre());
-            viewHolder.cinema_salle.setText(seance.getCinema_salle());
-            viewHolder.avatar.setImageDrawable(new ColorDrawable(20));
+            //viewHolder.cinema_salle.setText(seance.getCinema_salle());
+            viewHolder.affiche.setImageDrawable(new ColorDrawable(20));
 
             return convertView;
         }
 
         private class SeanceViewHolder{
             public TextView titre;
-            public TextView cinema_salle;
-            public ImageView avatar;
+            //public TextView cinema_salle;
+            public ImageView affiche;
         }
 }

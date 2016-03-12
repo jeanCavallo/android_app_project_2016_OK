@@ -26,15 +26,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.EventsActivity"
-            android:label="@string/title_activity_events"
+            android:label="Evènements"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SoonActivity"
-            android:label="@string/title_activity_soon"
+            android:label="Prochainement"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.PreferencesActivity"
-            android:label="@string/title_activity_preferences"
+            android:label="Préférences"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

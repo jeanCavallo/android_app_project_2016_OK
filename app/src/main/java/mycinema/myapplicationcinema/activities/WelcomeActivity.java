@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import mycinema.myapplicationcinema.Objects.FilmSeancesAdapter;
 import mycinema.myapplicationcinema.Objects.SeanceAdapter;
 import mycinema.myapplicationcinema.R;
 import mycinema.myapplicationcinema.dataBaseManagement.DBManager;
@@ -49,12 +50,12 @@ public class WelcomeActivity extends AppCompatActivity
 
         mListView = (ListView) findViewById(R.id.listView);
 
-        DBManager seancesDB = new DBManager(this);
-        seancesDB.getReadableDatabase();
+        DBManager filmSeancesDB = new DBManager(this);
+        filmSeancesDB.getReadableDatabase();
 
-        List<Seances> allSeances = seancesDB.getAllSeances();
+        List<Seances> Seances = filmSeancesDB.getAllSeancesOnceMovie();
 
-        SeanceAdapter adapter = new SeanceAdapter(WelcomeActivity.this, allSeances);
+        SeanceAdapter adapter = new SeanceAdapter(WelcomeActivity.this, Seances);
         mListView.setAdapter(adapter);
 
 

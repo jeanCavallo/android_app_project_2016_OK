@@ -7,19 +7,4 @@ android:background="#5f689c"
 android:orientation="vertical"
 tools:context="mycinema.myapplicationcinema.activities.StartingActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Please wait for the loading.."
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
-
-    <ProgressBar
-        android:id="@+id/progressBarLoading"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="fill_parent"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

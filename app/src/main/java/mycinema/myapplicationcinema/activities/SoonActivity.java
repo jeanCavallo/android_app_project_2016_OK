@@ -2,6 +2,7 @@ package mycinema.myapplicationcinema.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -42,18 +43,19 @@ public class SoonActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
 
-        mListView = (ListView) findViewById(R.id.listView);
+            mListView = (ListView) findViewById(R.id.listView);
 
-        DBManager soonDB = new DBManager(this);
-        soonDB.getReadableDatabase();
+            DBManager soonDB = new DBManager(this);
+            soonDB.getReadableDatabase();
 
-        List<Soon> allSoon = soonDB.getAllSoon();
+            List<Soon> allSoon = soonDB.getAllSoon();
 
-        SoonAdapter adapter = new SoonAdapter(SoonActivity.this, allSoon);
-        mListView.setAdapter(adapter);
+            SoonAdapter adapter = new SoonAdapter(SoonActivity.this, allSoon);
+            mListView.setAdapter(adapter);
+
     }
 
     @Override

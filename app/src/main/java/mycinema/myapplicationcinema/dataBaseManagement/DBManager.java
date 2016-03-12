@@ -381,6 +381,37 @@ public class DBManager extends SQLiteOpenHelper {
         return seanceList;
     }
 
+    public List<Seances> getAllSeancesOnceMovie() {
+        List<Seances> seanceList = new ArrayList<Seances>();
+
+        String selectQuery = "SELECT * FROM " + TABLE_SEANCES + " GROUP BY " + SEANCE_FILMID + ", " + SEANCE_TITRE; // TODO : select with distinct maybe to get only the list of the films in the Seances DB
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Seances seanceSelected = new Seances();
+                seanceSelected.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SEANCE_ID))));
+                seanceSelected.setActual_date(cursor.getString(cursor.getColumnIndex(SEANCE_ACTUAL_DATE)));
+                seanceSelected.setShow_time(cursor.getString(cursor.getColumnIndex(SEANCE_SHOW_TIME)));
+                seanceSelected.setIs_troisd(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(SEANCE_IS_TROISD))));
+                seanceSelected.setIs_malentendant(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(SEANCE_IS_MALENTENDANT))));
+                seanceSelected.setIs_handicape(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(SEANCE_IS_HANDICAPE))));
+                seanceSelected.setNationality(cursor.getString(cursor.getColumnIndex(SEANCE_NATIONALITY)));
+                seanceSelected.setCinemaid(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SEANCE_CINEMAID))));
+                seanceSelected.setFilmid(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SEANCE_FILMID))));
+                seanceSelected.setTitre(cursor.getString(cursor.getColumnIndex(SEANCE_TITRE)));
+                seanceSelected.setCategorieid(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SEANCE_CATEGORIEID))));
+                seanceSelected.setPerformanceid(Integer.parseInt(cursor.getString(cursor.getColumnIndex(SEANCE_PERFORMANCEID))));
+                seanceSelected.setCinema_salle(cursor.getString(cursor.getColumnIndex(SEANCE_CINEMA_SALLE)));
+
+                seanceList.add(seanceSelected);
+            } while (cursor.moveToNext());
+        }
+        return seanceList;
+    }
+
     public Seances getSeance(Integer idSeance) {
         Seances seance = new Seances();
         String selectQuery = "SELECT * FROM " + TABLE_SEANCES + " WHERE id = " + idSeance + "";

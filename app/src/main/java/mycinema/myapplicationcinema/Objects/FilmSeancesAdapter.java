@@ -3,9 +3,7 @@ package mycinema.myapplicationcinema.Objects;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +18,15 @@ import java.net.URL;
 import java.util.List;
 
 import mycinema.myapplicationcinema.R;
-import mycinema.myapplicationcinema.objectFromJSON.Seances;
-import mycinema.myapplicationcinema.objectFromJSON.Soon;
+import mycinema.myapplicationcinema.objectFromJSON.FilmSeances;
 
 /**
- * Created by jean on 09/03/16.
+ * Created by jean on 11/03/16.
  */
-public class SoonAdapter extends ArrayAdapter<Soon> {
+public class FilmSeancesAdapter extends ArrayAdapter<FilmSeances> {
 
-    public SoonAdapter(Context context, List<Soon> soonList) {
-        super(context, 0, soonList);
+    public FilmSeancesAdapter(Context context, List<FilmSeances> films) {
+        super(context, 0, films);
     }
 
     @Override
@@ -41,23 +38,24 @@ public class SoonAdapter extends ArrayAdapter<Soon> {
             StrictMode.setThreadPolicy(policy);
 
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.one_soon, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.one_seance, parent, false);
             }
 
-            SoonViewHolder viewHolder = (SoonViewHolder) convertView.getTag();
+            SeanceViewHolder viewHolder = (SeanceViewHolder) convertView.getTag();
             if (viewHolder == null) {
-                viewHolder = new SoonViewHolder();
+                viewHolder = new SeanceViewHolder();
                 viewHolder.titre = (TextView) convertView.findViewById(R.id.titre);
+                viewHolder.duree = (TextView) convertView.findViewById(R.id.duree);
                 viewHolder.affiche = (ImageView) convertView.findViewById(R.id.affiche);
                 convertView.setTag(viewHolder);
             }
 
-            Soon soon = getItem(position);
+            FilmSeances film = getItem(position);
 
-            // To load the picture
+            // Pour remplir la vue
             URL url = null;
             try {
-                url = new URL(soon.getAffiche());
+                url = new URL(film.getAffiche());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
@@ -68,16 +66,20 @@ public class SoonAdapter extends ArrayAdapter<Soon> {
                 e.printStackTrace();
             }
 
-            viewHolder.titre.setText(soon.getTitre());
-            viewHolder.affiche.setImageBitmap(bmp);
 
+            viewHolder.titre.setText(film.getTitre());
+            viewHolder.duree.setText(film.getDuree());
+            viewHolder.affiche.setImageBitmap(bmp);
         }
 
         return convertView;
     }
 
-    private class SoonViewHolder{
+    private class SeanceViewHolder{
         public TextView titre;
+        public TextView duree;
         public ImageView affiche;
     }
+
+
 }

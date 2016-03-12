@@ -39,15 +39,13 @@ public class StartingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting);
 
-        final ProgressBar mProgress = (ProgressBar) findViewById(R.id.progressBarLoading);
-
-        /*ProgressDialog pDialog;
+        ProgressDialog pDialog;
 
         pDialog = new ProgressDialog(StartingActivity.this);
-        pDialog.setMessage("Processing Request...");
+        pDialog.setMessage("Please wait for the loading..");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
-        pDialog.show();*/
+        pDialog.show();
 
         if(!isOnline()){
             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
@@ -57,7 +55,7 @@ public class StartingActivity extends AppCompatActivity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sendRequest(mProgress);
+                    sendRequest();
                 } finally {
                 }
             }
@@ -73,7 +71,7 @@ public class StartingActivity extends AppCompatActivity {
     }
     
     // TO SEND ALL THE REQUESTS
-    private void sendRequest(final ProgressBar mProgress){
+    private void sendRequest(){
 
         final Integer[] count = {0};
 
@@ -100,7 +98,6 @@ public class StartingActivity extends AppCompatActivity {
                         parseJSONFilmSeances(response);
                         Toast.makeText(StartingActivity.this, "JSON FILMS SEANCES imported !!", Toast.LENGTH_LONG).show();
                         count[0] = count[0] +1;
-                        mProgress.setProgress(count[0]/3);
                         if(count[0]==3){
                             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
                             startActivity(intent);
@@ -121,7 +118,6 @@ public class StartingActivity extends AppCompatActivity {
                         parseJSONProchainement(response);
                         Toast.makeText(StartingActivity.this, "JSON PROCHAINEMENT imported !!", Toast.LENGTH_LONG).show();
                         count[0] = count[0] +1;
-                        mProgress.setProgress(count[0]/3);
                         if(count[0]==3){
                             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
                             startActivity(intent);
@@ -142,7 +138,6 @@ public class StartingActivity extends AppCompatActivity {
                         parseJSONSeances(response);
                         Toast.makeText(StartingActivity.this, "JSON SEANCES imported !!", Toast.LENGTH_LONG).show();
                         count[0] = count[0] +1;
-                        mProgress.setProgress(count[0]/3);
                         if(count[0]==3){
                             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
                             startActivity(intent);
