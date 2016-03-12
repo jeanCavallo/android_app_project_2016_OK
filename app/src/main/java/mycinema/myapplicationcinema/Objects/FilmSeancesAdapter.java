@@ -2,84 +2,115 @@ package mycinema.myapplicationcinema.Objects;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
-import android.os.StrictMode;
+import android.media.Image;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.NetworkImageView;
+
 import java.util.List;
 
 import mycinema.myapplicationcinema.R;
+import mycinema.myapplicationcinema.loadImagesWithVolley.LoadImagesWithVolley;
 import mycinema.myapplicationcinema.objectFromJSON.FilmSeances;
 
 /**
  * Created by jean on 11/03/16.
  */
-public class FilmSeancesAdapter extends ArrayAdapter<FilmSeances> {
 
-    public FilmSeancesAdapter(Context context, List<FilmSeances> films) {
-        super(context, 0, films);
+public class FilmSeancesAdapter extends RecyclerView.Adapter<FilmSeancesAdapter.ViewHolder>{
+
+    private List<FilmSeances> filmSeances;
+    private Context context;
+    private ImageLoader mImageLoader;
+
+    public FilmSeancesAdapter(Context context, List<FilmSeances> filmToPrint) {
+        this.filmSeances = filmToPrint;
+        this.context = context;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.one_seance, parent, false);
-            }
-
-            SeanceViewHolder viewHolder = (SeanceViewHolder) convertView.getTag();
-            if (viewHolder == null) {
-                viewHolder = new SeanceViewHolder();
-                viewHolder.titre = (TextView) convertView.findViewById(R.id.titre);
-                viewHolder.duree = (TextView) convertView.findViewById(R.id.duree);
-                viewHolder.affiche = (ImageView) convertView.findViewById(R.id.affiche);
-                convertView.setTag(viewHolder);
-            }
-
-            FilmSeances film = getItem(position);
-
-            // Pour remplir la vue
-            URL url = null;
-            try {
-                url = new URL(film.getAffiche());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            Bitmap bmp = null;
-            try {
-                bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            viewHolder.titre.setText(film.getTitre());
-            viewHolder.duree.setText(film.getDuree());
-            viewHolder.affiche.setImageBitmap(bmp);
-        }
-
-        return convertView;
-    }
-
-    private class SeanceViewHolder{
         public TextView titre;
         public TextView duree;
         public ImageView affiche;
+
+        public ViewHolder(View view) {
+            super(view);
+            titre = (TextView) view.findViewById(R.id.titre);
+            duree = (TextView) view.findViewById(R.id.duree);
+            affiche = (ImageView) view.findViewById(R.id.affiche);
+        }
     }
 
+    public void add(int position, FilmSeances film) {
+        filmSeances.add(position, film);
+        notifyItemInserted(position);
+    }
+
+    public void remove(String item) {
+        int position = filmSeances.indexOf(item);
+        filmSeances.remove(position);
+        notifyItemRemoved(position);
+    }
+    
+    @Override
+    public FilmSeancesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_seance, parent, false);
+
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        final FilmSeances film = filmSeances.get(position);
+        holder.titre.setText(film.getTitre());
+        String stringDuree = "Réalisateur: " + film.getRealisateur();
+        holder.duree.setText(stringDuree);
+        String urlToDownLoad = film.getAffiche();
+        loadImageBitmap(holder,urlToDownLoad);
+
+        holder.titre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    public void loadImageBitmap(final ViewHolder holder, String urlToDownload) {
+
+        ImageRequest request = new ImageRequest(urlToDownload,
+            new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap bitmap) {
+                    holder.affiche.setImageBitmap(bitmap);
+                }
+            }, 0, 0, null,
+            new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                    holder.affiche.setImageResource(R.drawable.polaroid);
+                }
+            });
+        LoadImagesWithVolley.getInstance(context).addToRequestQueue(request);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return filmSeances.size();
+    }
 
 }

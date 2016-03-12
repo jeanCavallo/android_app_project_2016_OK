@@ -293,7 +293,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     public List<FilmSeances> getAllFilms() {
-        List<FilmSeances> filmList = new ArrayList<FilmSeances>();
+        List<FilmSeances> filmList2 = new ArrayList<FilmSeances>();
 
         String selectQuery = "SELECT * FROM " + TABLE_FILMSEANCES;
 
@@ -302,14 +302,39 @@ public class DBManager extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                FilmSeances filmSelected = new FilmSeances();
-                filmSelected.setId(Integer.parseInt(cursor.getString(0)));
-                filmSelected.setTitre(cursor.getString(1));
+                FilmSeances filmList = new FilmSeances();
+                filmList.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FILM_ID))));
+                filmList.setTitre(cursor.getString(cursor.getColumnIndex(FILM_TITRE)));
+                filmList.setTitre_ori(cursor.getString(cursor.getColumnIndex(FILM_TITRE_ORI)));
+                filmList.setAffiche(cursor.getString(cursor.getColumnIndex(FILM_AFFICHE)));
+                filmList.setWeb(cursor.getString(cursor.getColumnIndex(FILM_WEB)));
+                filmList.setDuree(cursor.getString(cursor.getColumnIndex(FILM_DUREE)));
+                filmList.setDistributeur(cursor.getString(cursor.getColumnIndex(FILM_DISTRIBUTEUR)));
+                filmList.setParticipants(cursor.getString(cursor.getColumnIndex(FILM_PARTICIPANTS)));
+                filmList.setRealisateur(cursor.getString(cursor.getColumnIndex(FILM_REALISATEUR)));
+                filmList.setSynopsis(cursor.getString(cursor.getColumnIndex(FILM_SYNOPSIS)));
+                filmList.setAnnee(cursor.getString(cursor.getColumnIndex(FILM_ANNEE)));
+                filmList.setDate_sortie(cursor.getString(cursor.getColumnIndex(FILM_DATE_SORTIE)));
+                filmList.setInfo(cursor.getString(cursor.getColumnIndex(FILM_INFO)));
+                filmList.setIs_visible(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(FILM_IS_VISIBLE))));
+                filmList.setIs_vente(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(FILM_IS_VENTE))));
+                filmList.setGenreid(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FILM_GENREID))));
+                filmList.setCategorieid(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FILM_CATEGORIEID))));
+                filmList.setGenre(cursor.getString(cursor.getColumnIndex(FILM_GENRE)));
+                filmList.setCategorie(cursor.getString(cursor.getColumnIndex(FILM_CATEGORIE)));
+                filmList.setReleaseNumber(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FILM_RELEASENUMBER))));
+                filmList.setPays(cursor.getString(cursor.getColumnIndex(FILM_PAYS)));
+                filmList.setShare_url(cursor.getString(cursor.getColumnIndex(FILM_SHARE_URL)));
+                filmList.setMedias(cursor.getString(cursor.getColumnIndex(FILM_MEDIAS)));
+                filmList.setVideos(cursor.getString(cursor.getColumnIndex(FILM_VIDEOS)));
+                filmList.setIs_avp(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(FILM_IS_AVP))));
+                filmList.setIs_alaune(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(FILM_IS_ALAUNE))));
+                filmList.setIs_lastWeek(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(FILM_IS_LASTWEEK))));
 
-                filmList.add(filmSelected);
+                filmList2.add(filmList);
             } while (cursor.moveToNext());
         }
-        return filmList;
+        return filmList2;
     }
 
     public FilmSeances getFilm(Integer idFilm) {
@@ -323,6 +348,7 @@ public class DBManager extends SQLiteOpenHelper {
         filmList.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(FILM_ID))));
         filmList.setTitre(cursor.getString(cursor.getColumnIndex(FILM_TITRE)));
         filmList.setTitre_ori(cursor.getString(cursor.getColumnIndex(FILM_TITRE_ORI)));
+        filmList.setAffiche(cursor.getString(cursor.getColumnIndex(FILM_AFFICHE)));
         filmList.setWeb(cursor.getString(cursor.getColumnIndex(FILM_WEB)));
         filmList.setDuree(cursor.getString(cursor.getColumnIndex(FILM_DUREE)));
         filmList.setDistributeur(cursor.getString(cursor.getColumnIndex(FILM_DISTRIBUTEUR)));

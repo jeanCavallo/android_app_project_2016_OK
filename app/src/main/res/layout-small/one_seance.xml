@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="16dp"
     >
 
-    <ImageView
-        android:id="@+id/affiche"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:background="@mipmap/ic_launcher"
-        />
-
-    <TextView
-        android:id="@+id/titre"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/affiche"
-        android:layout_alignTop="@+id/affiche"
-        android:textStyle="bold"
-        tools:text="Titre"
-        />
+        android:id="@+id/oneMovie"
+        >
 
-    <TextView
-        android:id="@+id/duree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:layout_alignLeft="@+id/titre"
-        android:layout_below="@+id/titre"
-        tools:text="Duree"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            >
 
-</RelativeLayout>
+            <ImageView
+                android:id="@+id/affiche"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                />
+
+            <TextView
+                android:id="@+id/titre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/affiche"
+                android:layout_alignTop="@+id/affiche"
+                android:textStyle="bold"
+                android:text="Titre"
+                />
+
+            <TextView
+                android:id="@+id/duree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:layout_alignLeft="@+id/titre"
+                android:layout_below="@+id/titre"
+                android:text="Duree"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

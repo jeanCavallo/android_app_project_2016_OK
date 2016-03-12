@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import mycinema.myapplicationcinema.R;
 import mycinema.myapplicationcinema.dataBaseManagement.DBManager;
@@ -96,7 +99,6 @@ public class StartingActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         parseJSONFilmSeances(response);
-                        Toast.makeText(StartingActivity.this, "JSON FILMS SEANCES imported !!", Toast.LENGTH_LONG).show();
                         count[0] = count[0] +1;
                         if(count[0]==3){
                             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
@@ -116,7 +118,6 @@ public class StartingActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         parseJSONProchainement(response);
-                        Toast.makeText(StartingActivity.this, "JSON PROCHAINEMENT imported !!", Toast.LENGTH_LONG).show();
                         count[0] = count[0] +1;
                         if(count[0]==3){
                             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
@@ -136,7 +137,6 @@ public class StartingActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         parseJSONSeances(response);
-                        Toast.makeText(StartingActivity.this, "JSON SEANCES imported !!", Toast.LENGTH_LONG).show();
                         count[0] = count[0] +1;
                         if(count[0]==3){
                             Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);

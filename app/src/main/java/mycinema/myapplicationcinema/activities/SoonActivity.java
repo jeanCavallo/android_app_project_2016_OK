@@ -2,10 +2,9 @@ package mycinema.myapplicationcinema.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,11 +17,9 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import mycinema.myapplicationcinema.Objects.SeanceAdapter;
 import mycinema.myapplicationcinema.Objects.SoonAdapter;
 import mycinema.myapplicationcinema.R;
 import mycinema.myapplicationcinema.dataBaseManagement.DBManager;
-import mycinema.myapplicationcinema.objectFromJSON.Seances;
 import mycinema.myapplicationcinema.objectFromJSON.Soon;
 
 public class SoonActivity extends AppCompatActivity
@@ -43,18 +40,23 @@ public class SoonActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-            mListView = (ListView) findViewById(R.id.listView);
+        RecyclerView recyclerViewFilm = (RecyclerView) findViewById(R.id.listView);
+        recyclerViewFilm.setHasFixedSize(true);
 
-            DBManager soonDB = new DBManager(this);
-            soonDB.getReadableDatabase();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewFilm.setLayoutManager(layoutManager);
+        recyclerViewFilm.setItemAnimator(new DefaultItemAnimator());
 
-            List<Soon> allSoon = soonDB.getAllSoon();
+        DBManager soonDB = new DBManager(this);
+        soonDB.getReadableDatabase();
 
-            SoonAdapter adapter = new SoonAdapter(SoonActivity.this, allSoon);
-            mListView.setAdapter(adapter);
+        List<Soon> allSoon = soonDB.getAllSoon();
+
+        SoonAdapter adapter = new SoonAdapter(SoonActivity.this, allSoon);
+        recyclerViewFilm.setAdapter(adapter);
 
     }
 
@@ -84,15 +86,19 @@ public class SoonActivity extends AppCompatActivity
         if (id == R.id.menu_alaffiche) {
             Intent intent = new Intent(SoonActivity.this,WelcomeActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.menu_evenements) {
             Intent intent = new Intent(SoonActivity.this,EventsActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.menu_prochainement) {
             Intent intent = new Intent(SoonActivity.this,SoonActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.settings_preferences) {
             Intent intent = new Intent(SoonActivity.this,PreferencesActivity.class);
             startActivity(intent);
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

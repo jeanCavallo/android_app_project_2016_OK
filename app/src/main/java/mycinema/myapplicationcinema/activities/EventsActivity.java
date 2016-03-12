@@ -62,15 +62,19 @@ public class EventsActivity extends AppCompatActivity
         if (id == R.id.menu_alaffiche) {
             Intent intent = new Intent(EventsActivity.this,WelcomeActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.menu_evenements) {
             Intent intent = new Intent(EventsActivity.this,EventsActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.menu_prochainement) {
             Intent intent = new Intent(EventsActivity.this,SoonActivity.class);
             startActivity(intent);
+            this.finish();
         } else if (id == R.id.settings_preferences) {
             Intent intent = new Intent(EventsActivity.this,PreferencesActivity.class);
             startActivity(intent);
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
