@@ -12,4 +12,6 @@
     tools:context="mycinema.myapplicationcinema.activities.PreferencesActivity"
     tools:showIn="@layout/app_bar_preferences">
 
+
+
 </RelativeLayout>

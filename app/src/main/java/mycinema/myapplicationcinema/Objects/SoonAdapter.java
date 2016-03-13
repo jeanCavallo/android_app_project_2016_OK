@@ -1,6 +1,7 @@
 package mycinema.myapplicationcinema.Objects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.android.volley.toolbox.ImageRequest;
 import java.util.List;
 
 import mycinema.myapplicationcinema.R;
+import mycinema.myapplicationcinema.activities.MovieActivity;
 import mycinema.myapplicationcinema.loadImagesWithVolley.LoadImagesWithVolley;
 import mycinema.myapplicationcinema.objectFromJSON.Soon;
 
@@ -81,7 +83,16 @@ public class SoonAdapter extends RecyclerView.Adapter<SoonAdapter.ViewHolder>{
         holder.titre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, MovieActivity.class).putExtra("filmIdToPrint", film.getId());
+                context.startActivity(intent);
+            }
+        });
 
+        holder.affiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,MovieActivity.class).putExtra("filmIdToPrint", film.getId());
+                context.startActivity(intent);
             }
         });
     }

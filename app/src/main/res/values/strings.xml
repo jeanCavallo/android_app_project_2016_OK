@@ -99,4 +99,7 @@
     <string name="title_activity_soon">SoonActivity</string>
     <string name="title_activity_events">EventsActivity</string>
     <string name="title_activity_preferences">PreferencesActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

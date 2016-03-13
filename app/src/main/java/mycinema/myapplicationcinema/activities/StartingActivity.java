@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -20,8 +18,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import mycinema.myapplicationcinema.R;
 import mycinema.myapplicationcinema.dataBaseManagement.DBManager;
@@ -51,11 +47,17 @@ public class StartingActivity extends AppCompatActivity {
         pDialog.show();
 
         if(!isOnline()){
-            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+            Intent intent = new Intent(StartingActivity.this,MainActivity.class);
             startActivity(intent);
+            Context context = getApplicationContext();
+            CharSequence text = "Internet is disable, you do not have the updated news !";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }else{
             this.deleteDatabase("FilmSeancesDB.db");
-        Thread timerThread = new Thread(){
+            Thread timerThread = new Thread(){
             public void run(){
                 try{
                     sendRequest();
@@ -94,14 +96,14 @@ public class StartingActivity extends AppCompatActivity {
                     }
                 });*/
 
-        StringRequest stringRequestFilmSeances = new StringRequest(JSON_URL_FILMSEANCES,
+        final StringRequest stringRequestFilmSeances = new StringRequest(JSON_URL_FILMSEANCES,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         parseJSONFilmSeances(response);
                         count[0] = count[0] +1;
                         if(count[0]==3){
-                            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+                            Intent intent = new Intent(StartingActivity.this,MainActivity.class);
                             startActivity(intent);
                         }
                     }
@@ -113,14 +115,14 @@ public class StartingActivity extends AppCompatActivity {
                     }
                 });
 
-        StringRequest stringRequestProchainements = new StringRequest(JSON_URL_PROCHAINEMENTS,
+        final StringRequest stringRequestProchainements = new StringRequest(JSON_URL_PROCHAINEMENTS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         parseJSONProchainement(response);
                         count[0] = count[0] +1;
                         if(count[0]==3){
-                            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+                            Intent intent = new Intent(StartingActivity.this,MainActivity.class);
                             startActivity(intent);
                         }
                     }
@@ -132,14 +134,14 @@ public class StartingActivity extends AppCompatActivity {
                     }
                 });
 
-        StringRequest stringRequestSeances = new StringRequest(JSON_URL_SEANCES,
+        final StringRequest stringRequestSeances = new StringRequest(JSON_URL_SEANCES,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         parseJSONSeances(response);
                         count[0] = count[0] +1;
                         if(count[0]==3){
-                            Intent intent = new Intent(StartingActivity.this,WelcomeActivity.class);
+                            Intent intent = new Intent(StartingActivity.this,MainActivity.class);
                             startActivity(intent);
                         }
                     }
@@ -151,11 +153,20 @@ public class StartingActivity extends AppCompatActivity {
                     }
                 });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
         //requestQueue.add(stringRequestEvents);
-        requestQueue.add(stringRequestFilmSeances);
-        requestQueue.add(stringRequestProchainements);
-        requestQueue.add(stringRequestSeances);
+        Thread timerThread = new Thread(){
+            public void run(){
+                try{
+                    requestQueue.add(stringRequestFilmSeances);
+                    requestQueue.add(stringRequestProchainements);
+                    requestQueue.add(stringRequestSeances);
+                }finally {
+            }
+        }
+        };
+        timerThread.start();
+
     }
     
     
@@ -169,11 +180,24 @@ public class StartingActivity extends AppCompatActivity {
             DBManager dbManagerFilmSeances = new DBManager(getApplicationContext());
             for (Integer subscript=0; subscript<jsonArray.length(); subscript++){
                 jsonObject = jsonArray.getJSONObject(subscript);
-                FilmSeances filmSeancesToAdd = new FilmSeances(jsonObject.getInt("id"),jsonObject.getString("titre"),jsonObject.getString("titre_ori"),jsonObject.getString("affiche"),jsonObject.getString("web"),
-                        jsonObject.getString("duree"),jsonObject.getString("distributeur"),jsonObject.getString("participants"),jsonObject.getString("realisateur"),jsonObject.getString("synopsis"),
-                        jsonObject.getString("annee"),jsonObject.getString("date_sortie"),jsonObject.getString("info"),jsonObject.getBoolean("is_visible"),jsonObject.getBoolean("is_vente"),
-                        jsonObject.getInt("genreid"), jsonObject.getInt("categorieid"), jsonObject.getString("genre"),jsonObject.getString("categorie"), jsonObject.getInt("ReleaseNumber"),jsonObject.getString("pays"),
-                        jsonObject.getString("share_url"),jsonObject.getString("medias"), jsonObject.getString("videos"), jsonObject.getBoolean("is_avp"), jsonObject.getBoolean("is_alaune"), jsonObject.getBoolean("is_lastWeek"));
+
+                String checkMedias;
+                if (jsonObject.has("medias")) {
+                    checkMedias = jsonObject.getString("medias");
+                }else{checkMedias = null;}
+
+                String checkVideos;
+                if (jsonObject.has("videos")) {
+                    checkVideos = jsonObject.getString("videos");
+                }else{checkVideos = null;}
+
+
+
+                FilmSeances filmSeancesToAdd = new FilmSeances(jsonObject.getInt("id"), jsonObject.getString("titre"), jsonObject.getString("titre_ori"), jsonObject.getString("affiche"), jsonObject.getString("web"),
+                        jsonObject.getString("duree"), jsonObject.getString("distributeur"), jsonObject.getString("participants"), jsonObject.getString("realisateur"), jsonObject.getString("synopsis"),
+                        jsonObject.getString("annee"), jsonObject.getString("date_sortie"), jsonObject.getString("info"), jsonObject.getBoolean("is_visible"), jsonObject.getBoolean("is_vente"),
+                        jsonObject.getInt("genreid"), jsonObject.getInt("categorieid"), jsonObject.getString("genre"), jsonObject.getString("categorie"), jsonObject.getInt("ReleaseNumber"), jsonObject.getString("pays"),
+                        jsonObject.getString("share_url"), checkMedias, checkVideos, jsonObject.getBoolean("is_avp"), jsonObject.getBoolean("is_alaune"), jsonObject.getBoolean("is_lastWeek"));
                 dbManagerFilmSeances.addFilmSeances(filmSeancesToAdd);
             }
         } catch (JSONException e) {

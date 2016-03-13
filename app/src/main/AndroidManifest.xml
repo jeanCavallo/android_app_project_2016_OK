@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name=".activities.SeancesActivity"
             android:label="Séances"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -35,7 +35,9 @@
         <activity
             android:name=".activities.PreferencesActivity"
             android:label="Préférences"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.MovieActivity"/>
     </application>
 
 </manifest>

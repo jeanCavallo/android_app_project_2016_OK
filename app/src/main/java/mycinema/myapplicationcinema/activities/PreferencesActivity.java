@@ -2,9 +2,6 @@ package mycinema.myapplicationcinema.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,11 +13,12 @@ import android.view.MenuItem;
 
 import mycinema.myapplicationcinema.R;
 
+
 public class PreferencesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,7 +32,9 @@ public class PreferencesActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -60,7 +60,7 @@ public class PreferencesActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_alaffiche) {
-            Intent intent = new Intent(PreferencesActivity.this,WelcomeActivity.class);
+            Intent intent = new Intent(PreferencesActivity.this,SeancesActivity.class);
             startActivity(intent);
             this.finish();
         } else if (id == R.id.menu_evenements) {

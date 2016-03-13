@@ -1,6 +1,7 @@
 package mycinema.myapplicationcinema.Objects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import java.util.List;
 
 import mycinema.myapplicationcinema.R;
+import mycinema.myapplicationcinema.activities.MovieActivity;
+import mycinema.myapplicationcinema.activities.SoonActivity;
 import mycinema.myapplicationcinema.loadImagesWithVolley.LoadImagesWithVolley;
 import mycinema.myapplicationcinema.objectFromJSON.FilmSeances;
 
@@ -85,7 +88,16 @@ public class FilmSeancesAdapter extends RecyclerView.Adapter<FilmSeancesAdapter.
         holder.titre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, MovieActivity.class).putExtra("filmIdToPrint", film.getId());
+                context.startActivity(intent);
+            }
+        });
 
+        holder.affiche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,MovieActivity.class).putExtra("filmIdToPrint", film.getId());
+                context.startActivity(intent);
             }
         });
     }

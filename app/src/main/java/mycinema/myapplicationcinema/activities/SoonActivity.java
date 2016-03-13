@@ -84,7 +84,7 @@ public class SoonActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_alaffiche) {
-            Intent intent = new Intent(SoonActivity.this,WelcomeActivity.class);
+            Intent intent = new Intent(SoonActivity.this,SeancesActivity.class);
             startActivity(intent);
             this.finish();
         } else if (id == R.id.menu_evenements) {

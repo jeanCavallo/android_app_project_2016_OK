@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +21,7 @@ import mycinema.myapplicationcinema.R;
 import mycinema.myapplicationcinema.dataBaseManagement.DBManager;
 import mycinema.myapplicationcinema.objectFromJSON.FilmSeances;
 
-public class WelcomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SeancesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +51,8 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
 
         List<FilmSeances> FilmSeances = filmSeancesDB.getAllFilms();
 
-        FilmSeancesAdapter adapter = new FilmSeancesAdapter(WelcomeActivity.this,FilmSeances);
+        FilmSeancesAdapter adapter = new FilmSeancesAdapter(SeancesActivity.this,FilmSeances);
         recyclerViewFilm.setAdapter(adapter);
-
-        for (FilmSeances shop : FilmSeances) {
-            String log = "Id: " + shop.getId() + " ,URL: " + shop.getAffiche() + " ,Titre: " + shop.getTitre();
-// Writing shops to log
-            Log.d("Shop: : ", log);
-        }
 
     }
 
@@ -99,19 +92,19 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         int id = item.getItemId();
 
         if (id == R.id.menu_alaffiche) {
-            Intent intent = new Intent(WelcomeActivity.this,WelcomeActivity.class);
+            Intent intent = new Intent(SeancesActivity.this,SeancesActivity.class);
             startActivity(intent);
             this.finish();
         } else if (id == R.id.menu_evenements) {
-            Intent intent = new Intent(WelcomeActivity.this,EventsActivity.class);
+            Intent intent = new Intent(SeancesActivity.this,EventsActivity.class);
             startActivity(intent);
             this.finish();
         } else if (id == R.id.menu_prochainement) {
-            Intent intent = new Intent(WelcomeActivity.this,SoonActivity.class);
+            Intent intent = new Intent(SeancesActivity.this,SoonActivity.class);
             startActivity(intent);
             this.finish();
         } else if (id == R.id.settings_preferences) {
-            Intent intent = new Intent(WelcomeActivity.this,PreferencesActivity.class);
+            Intent intent = new Intent(SeancesActivity.this,PreferencesActivity.class);
             startActivity(intent);
             this.finish();
         }
